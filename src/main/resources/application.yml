@@ -1,0 +1,106 @@
+# 端口号
+server:
+  port: 8989
+  servlet:
+    context-path: /api/v1
+spring:
+  datasource:
+    #  数据源基本配置
+    username: root
+    password: root123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/seedxion_worker?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    druid:
+      # 初始化连接
+      initial-size: 50
+      # 最大活动连接数
+      max-active: 100
+      max-pool-prepared-statement-per-connection-size: 50
+      # 最大超时等待时间,单位毫秒
+      max-wait: 60000
+      # 配置一个连接在池中最小生存的时间(当前时间-最后活动时间)，单位是毫秒
+      #min-evictable-idle-time-millis: 300000
+      #max-evictable-idle-time-millis: 900000
+      # 最小空闲连接，连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接
+      min-idle: 10
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      # 标记是否删除泄露的连接,如果空闲时间超过removeAbandonedTimeout则删除
+      remove-abandoned: true
+      # 关闭abandoned连接时输出错误日志
+      log-abandoned: false
+      # 超时时间；单位为秒。空闲时间(当前时间-连接时间)超过这个时间被删除
+      remove-abandoned-timeout: 1200
+      # 检测取出连接池的连接是否可用,会影响性能
+      test-on-borrow: false
+      # 指明是否在归还到池中前进行检验
+      test-on-return: false
+      # 建议配置为true，不影响性能，并且保证安全性。如果testOnBorrow=true则此配置无效。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      # 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位.如果设置为非正数,则不运行空闲连接回收器线程，配合testWhileIdle使用
+      time-between-eviction-runs-millis: 2000
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 校验的sql
+      validation-query: SELECT 1 FROM DUAL
+      # 设置获取连接时的重试次数，-1为不重试
+      not-full-timeout-retry-count: 3
+      # true表示向数据库请求连接失败后,就算后端数据库恢复正常也不进行重连,客户端对pool的请求都拒绝掉.false表示新的请求都会尝试去数据库请求connection.默认为false
+      break-after-acquire-failure: false
+      # 设置获取连接出错时的自动重连次数,配合BreakAfterAcquireFailure
+      connection-error-retry-attempts: 3
+      # 异步初始化策略
+      async-init: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+#  redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 0
+    # 连接超时时间（毫秒）
+    timeout: 3000
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+
+# mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/**.xml
+  global-config:
+    db-config:
+      # 主键自增策略：ID自增
+      id-type: auto
+      # 只更新和插入非NULL值（默认not_null）
+      field-strategy: not_null
+      table-underline: true
+      db-type: mysql
+      # 逻辑删除表示删除的值(默认为 1)
+      logic-delete-value: 1
+      #逻辑删除表示未删除的值(默认为 0)
+      logic-not-delete-value: 0
+
+
+# logger
+logging:
+  config: classpath:logback.xml
+  level:
+    # Feign⽇志只会对⽇志级别为debug的做出响应
+    com.trust.cloud: debug
+
+custom-param:
+  sms:
+    accessKeyId: LTAI4GH6HVDke8WWqcXjq6CR
+    accessSecret: PHYLFeUhzobzU3w0bC92HyK0aoQhV2
+    #短信模板 -
+    templateCode:
+
